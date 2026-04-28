@@ -15,12 +15,7 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="mb-4">
-    <input type="text" id="searchInput" 
-           placeholder="Rechercher un rendez-vous..."
-           class="w-full border rounded p-2 shadow-sm">
-</div>
-
+    
 {{-- Search Bar --}}
 <div class="mb-4">
     <input type="text" id="searchInput" 
@@ -171,6 +166,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         params: { q: query }
     })
     .then(function(response) {
+        console.log(response.data); // debug
         const tbody = document.getElementById('appointmentsTable');
         tbody.innerHTML = '';
         
@@ -191,6 +187,9 @@ document.getElementById('searchInput').addEventListener('input', function() {
                 </tr>
             `;
         });
+    })
+    .catch(function(error) {
+        console.log('Error:', error); // debug
     });
 });
 </script>

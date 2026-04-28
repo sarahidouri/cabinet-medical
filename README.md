@@ -22,8 +22,8 @@ php artisan key:generate
 
 # 4. Configurer la base de données dans .env
 DB_DATABASE=cabinet_medical
-DB_USERNAME=root
-DB_PASSWORD=
+DB_USERNAME=dev
+DB_PASSWORD=sarasara
 
 # 5. Migrer et seeder
 php artisan migrate --seed
@@ -37,19 +37,19 @@ npm run dev
 
 ## 🔑 Identifiants par défaut
 
-| Rôle | Email | Password |
-|---|---|---|
-| Patient | patient@test.com | password |
-| Médecin | medecin@test.com | password |
+| Rôle    | Email            | Password |
+|---      |---               |---       |
+| Patient | patient@test.com | sihamsiham |
+| Médecin | medecin@test.com | fatimazohrafatimazohra |
 
 ---
 
 ## 🔌 API Endpoints
 
-| Méthode | Endpoint | Description |
-|---|---|---|
-| GET | `/api/appointments` | Liste tous les rendez-vous |
-| POST | `/api/appointments` | Créer un nouveau rendez-vous |
+| Méthode | Endpoint            | Description                 |
+|---      |---                  |---                          |
+| GET     | `/api/appointments` | Liste tous les rendez-vous  |
+| POST    | `/api/appointments` | Créer un nouveau rendez-vous|
 
 ### Exemple POST /api/appointments
 ```json
@@ -66,7 +66,7 @@ npm run dev
 
 ## 🌍 Langues disponibles
 - Français 🇫🇷
-- Arabe 🇲🇦
+- Arabe ar
 
 ---
 

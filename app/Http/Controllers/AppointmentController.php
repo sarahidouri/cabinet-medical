@@ -48,7 +48,7 @@ class AppointmentController extends Controller
             'status' => 'pending',
         ]);
 
-        Mail::to(auth()->user()->email)->send(new AppointmentConfirmation($appointment));
+        // Mail::to(auth()->user()->email)->send(new AppointmentConfirmation($appointment));
         return redirect()->route('appointments.index')->with('success', 'Rendez-vous créé avec succès!');
     }
 
@@ -88,9 +88,11 @@ class AppointmentController extends Controller
     $query = $request->get('q');
     
     $appointments = Appointment::with(['patient', 'medecin', 'service'])
-        ->whereHas('patient', fn($q) => $q->where('name', 'like', "%$query%"))
-        ->orWhereHas('medecin', fn($q) => $q->where('name', 'like', "%$query%"))
-        ->orWhereHas('service', fn($q) => $q->where('name', 'like', "%$query%"))
+        ->where(function($q) use ($query) {
+            $q->whereHas('patient', fn($q) => $q->where('name', 'like', "%$query%"))
+              ->orWhereHas('medecin', fn($q) => $q->where('name', 'like', "%$query%"))
+              ->orWhereHas('service', fn($q) => $q->where('name', 'like', "%$query%"));
+        })
         ->latest()
         ->get();
 
@@ -105,4 +107,5 @@ class AppointmentController extends Controller
         ];
     }));
 }
+
 }
