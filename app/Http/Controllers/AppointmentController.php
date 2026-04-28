@@ -6,6 +6,9 @@ use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\AppointmentConfirmation;
+use Illuminate\Support\Facades\Mail;
+
 
 class AppointmentController extends Controller
 {
@@ -36,7 +39,7 @@ class AppointmentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'patient_id' => auth()->id(),
             'medecin_id' => $request->medecin_id,
             'service_id' => $request->service_id,
@@ -45,6 +48,7 @@ class AppointmentController extends Controller
             'status' => 'pending',
         ]);
 
+        Mail::to(auth()->user()->email)->send(new AppointmentConfirmation($appointment));
         return redirect()->route('appointments.index')->with('success', 'Rendez-vous créé avec succès!');
     }
 
