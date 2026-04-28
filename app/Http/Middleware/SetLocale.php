@@ -9,8 +9,13 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next)
     {
-        if (session()->has('locale')) {
-            app()->setLocale(session('locale'));
+        try {
+            $locale = session('locale');
+            if ($locale) {
+                app()->setLocale($locale);
+            }
+        } catch (\Exception $e) {
+            // session mmazalt makanatsh
         }
         return $next($request);
     }
