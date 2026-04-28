@@ -35,15 +35,6 @@ npm run dev
 
 ---
 
-## 🔑 Identifiants par défaut
-
-| Rôle    | Email            | Password |
-|---      |---               |---       |
-| Patient | patient@test.com | sihamsiham |
-| Médecin | medecin@test.com | fatimazohrafatimazohra |
-
----
-
 ## 🔌 API Endpoints
 
 | Méthode | Endpoint            | Description                 |
