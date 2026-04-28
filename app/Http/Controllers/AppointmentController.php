@@ -77,4 +77,28 @@ class AppointmentController extends Controller
         $appointment->delete();
         return redirect()->route('appointments.index')->with('success', 'Rendez-vous supprimé!');
     }
+
+
+    public function search(Request $request)
+{
+    $query = $request->get('q');
+    
+    $appointments = Appointment::with(['patient', 'medecin', 'service'])
+        ->whereHas('patient', fn($q) => $q->where('name', 'like', "%$query%"))
+        ->orWhereHas('medecin', fn($q) => $q->where('name', 'like', "%$query%"))
+        ->orWhereHas('service', fn($q) => $q->where('name', 'like', "%$query%"))
+        ->latest()
+        ->get();
+
+    return response()->json($appointments->map(function($a) {
+        return [
+            'id' => $a->id,
+            'patient' => $a->patient->name,
+            'medecin' => $a->medecin->name,
+            'service' => $a->service->name,
+            'date' => $a->appointment_date,
+            'status' => $a->status,
+        ];
+    }));
+}
 }

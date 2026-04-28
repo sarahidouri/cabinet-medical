@@ -15,6 +15,18 @@
             {{ session('success') }}
         </div>
     @endif
+    <div class="mb-4">
+    <input type="text" id="searchInput" 
+           placeholder="Rechercher un rendez-vous..."
+           class="w-full border rounded p-2 shadow-sm">
+</div>
+
+{{-- Search Bar --}}
+<div class="mb-4">
+    <input type="text" id="searchInput" 
+           placeholder="Rechercher un rendez-vous..."
+           class="w-full border rounded p-2 shadow-sm">
+</div>
 
     <table class="w-full bg-white shadow rounded">
         <thead class="bg-gray-50">
@@ -147,4 +159,40 @@ function closeCreateModal() {
     modal.classList.remove('flex');
 }
 </script>
+
+
+
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    const query = this.value;
+    
+    axios.get('/appointments/search', {
+        params: { q: query }
+    })
+    .then(function(response) {
+        const tbody = document.getElementById('appointmentsTable');
+        tbody.innerHTML = '';
+        
+        response.data.forEach(function(a) {
+            tbody.innerHTML += `
+                <tr class="border-t">
+                    <td class="p-3">${a.patient}</td>
+                    <td class="p-3">${a.medecin}</td>
+                    <td class="p-3">${a.service}</td>
+                    <td class="p-3">${a.date}</td>
+                    <td class="p-3">${a.status}</td>
+                    <td class="p-3 flex gap-2">
+                        <a href="/appointments/${a.id}/edit" 
+                           class="bg-yellow-400 text-white px-3 py-1 rounded">Edit</a>
+                        <button onclick="openDeleteModal(${a.id})" 
+                                class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+});
+</script>
+
 @endsection
