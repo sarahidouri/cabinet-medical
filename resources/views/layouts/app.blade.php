@@ -16,6 +16,18 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
+            {{-- Language Switcher --}}
+<div class="bg-blue-600 flex justify-end px-4 py-1 gap-2">
+    <a href="{{ route('lang.switch', 'fr') }}" 
+       class="px-2 py-1 rounded {{ app()->getLocale() == 'fr' ? 'bg-white text-blue-600' : 'text-white' }}">
+        FR
+    </a>
+    <a href="{{ route('lang.switch', 'ar') }}" 
+       class="px-2 py-1 rounded {{ app()->getLocale() == 'ar' ? 'bg-white text-blue-600' : 'text-white' }}">
+        AR
+    </a>
+</div>
+
             @isset($header)
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
