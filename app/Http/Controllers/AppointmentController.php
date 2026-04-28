@@ -11,10 +11,12 @@ class AppointmentController extends Controller
 {
     // Lista dyal rdv
     public function index()
-    {
-        $appointments = Appointment::with(['patient', 'medecin', 'service'])->latest()->paginate(10);
-        return view('appointments.index', compact('appointments'));
-    }
+{
+    $appointments = Appointment::with(['patient', 'medecin', 'service'])->latest()->paginate(10);
+    $medecins = User::where('role', 'medecin')->get();
+    $services = Service::all();
+    return view('appointments.index', compact('appointments', 'medecins', 'services'));
+}
 
     // Formulaire jdid
     public function create()
